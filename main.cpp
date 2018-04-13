@@ -23,12 +23,12 @@
 
 using namespace std;
 
-ofstream INPUT;
+ofstream INPUT; //I don't see anywhere that it's doing I/O besides to the console**
 ofstream EXPIRED;
 ofstream INVALID;
 ofstream REPORT;
 
-class Subscriber{
+class Subscriber{ //This should be moved into its own class file. Then import it into the main and create a Subscriber Object **
 
 public :
 
@@ -52,7 +52,7 @@ int expirationdate;
 
 };
 
-class SubscriberHandling{
+class SubscriberHandling{  //This should be moved into its own class file. Then import it into the main and create a SubscriberHandling Object **
 
 private :
 
@@ -90,11 +90,11 @@ int main()
 
 cout<<"Enter the current date:"<<endl;
 
-int date;
+int date; 
 
 cin>>date;
 
-int num;
+int num; 
 
 string s;
 
@@ -102,15 +102,45 @@ int choice=-1;
 
 //make new subscriber handling object with current date set
 
-SubscriberHandling sh(date);
-
+SubscriberHandling sh(date); //Add a more descriptive name for your object, or coding standard is to call it 'subscriberHandling' if the class is called SubscriberHandling. **
+  
+  //============================
+   //This down here should be moved into it's down function that would take in an int, and return a String: **
+  //public int doStuff(int pInt) {
+  // String returnString;
+  // switch (pInt) {
+  // ...
+  // ...
+  // return returnString;
+  boolean doIEndProgram;
+  while (!doIEndProgram) {
+    displayOptions();
+    int option;
+    cin >> option;
+    doIEndProgram = doStuffWithThings(option, sh);
+  }
+  
+  boolean doStuffWithThings(int pOption, Subscriber pSh) {
+    if (pOption == 7){
+      return true;
+    }
+    
+    switch (pOption) {
+        //Write out your messages here
+    }
+    return false;
+  }
+    
+//============================
+  
+  
 do{
 
 switch(choice)
 
 {
 
-case 1:sh.addSubscriber();break;//call add subscriber method
+case 1:sh.addSubscriber();break;//call add subscriber method //Move break to its own line **
 
 case 2:
 
@@ -138,7 +168,9 @@ case 5:sh.expiredSubscriptions();break;//call expired subscriptions method
 
 case 6:sh.subscriptionExpiringInTwoMonths();break;//call subscriptionExpiringInTwoMonths method
 
-}
+} //Switch statement needs a default case: default: Even if it does nothing **
+ 
+  
 
 cout<<"\n-------------------ENTER CHOICE--------------------"<<endl<<endl;
 
@@ -162,7 +194,7 @@ cin>>choice;
 
 cout<<"\n\nTerminating the program....."<<endl<<endl;
 
-cin.get();//to hold the console screen
+cin.get();//to hold the console screen //Don't need to have 2, unless you want 2 chars needed to end the program.**
 
 cin.get();//to hold the console screen
 
@@ -176,7 +208,7 @@ SubscriberHandling::SubscriberHandling(int date){
 
 curDate=date;//set current date
 
-sub_id=101;//initial value of subscriber
+sub_id=101;//initial value of subscriber //This would be better to have a static int somewhere, then when a new subscriber comes in the new sub would be the static int + 1, or find the highest subscriber and add 1**
 
 hardCode();
 
@@ -184,11 +216,13 @@ hardCode();
 
 //hardcode method
 
-void SubscriberHandling:: hardCode()
+void SubscriberHandling:: hardCode() //This should just be in a txt file, CSV or some other file and then read it splitting on something like comma and putting into respective fields **  
 
 {
 
-Subscriber one;
+Subscriber one; //Instead of this just create a Vector (In Java it's called an arrayList) of SubscriberObjects
+  //vector <Subscriber> subscriberList;
+  //Read the file in and add objects to the vector
 
 one.subscriberNumber=sub_id;
 
@@ -374,7 +408,7 @@ subscribers.push_back(eight);
 
 //add subscriber function
 
-void SubscriberHandling::addSubscriber()
+void SubscriberHandling::addSubscriber() //Move these fuctions to the Subscriber class file, they don't need to be in main**
 
 {
 
@@ -392,7 +426,7 @@ cout<<"Enter the details of the subscriber:\n"<<endl;
 
 cout<<"Enter The first name: "<<endl;
 
-getline(cin,s);
+getline(cin,s); //I think this can just be reduced to cin >> sub.firstName **
 
 getline(cin,s);//a second time to bypass the enter pressed
 
@@ -454,7 +488,7 @@ cout<<"\nThe expired subscriptions are: "<<endl;
 
 //from begin to end of list
 
-for(ite=subscribers.begin();ite!=subscribers.end();ite++)
+for(ite=subscribers.begin();ite!=subscribers.end();ite++) //Not sure on the exact implementation of an enhanced for loop in C++: https://stackoverflow.com/questions/8378583/enhanced-for-loops-in-c
 
 {
 
@@ -498,7 +532,7 @@ void SubscriberHandling::subscriptionExpiringInTwoMonths()
 
 vector<Subscriber> :: iterator ite;//get an iterator of subscriber type
 
-cout<<"\nThe subscriptions expiring in 2 months are: "<<endl;
+cout<<"\nThe subscriptions expiring in 2 months are: "<<endl; //DEFECT, this will still print even if there aren't any subscribers that expire in 2 months, check for them first, make a list and then if there are any print this message, then the subscribers**
 
 //from begin to end of list
 
@@ -512,7 +546,7 @@ if((*ite).expirationdate-curDate<=2)
 
 //print the info
 
-
+//DUPLICATED CODE.... This can be put into a seperate function, you call this several times. Just call it printSubscriberInformation(Subscriber pSubscriber)**
 
 cout<<"\nfirst name: "<<(*ite).firstName<<endl;
 
