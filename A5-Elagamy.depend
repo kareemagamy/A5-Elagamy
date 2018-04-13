@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1523577054 source:c:\users\karim\documents\assignments\csc-175\a5-elagamy\main.cpp
+	<iostream>
+	<string>
+	<vector>
+
